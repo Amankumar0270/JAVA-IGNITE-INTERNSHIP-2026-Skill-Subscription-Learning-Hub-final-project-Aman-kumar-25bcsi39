@@ -22,4 +22,4 @@
 
 ## Final
 - [x] No errors in console YES
-- [] Full flow working end-to-end YES
+- [x] Full flow working end-to-end YES
