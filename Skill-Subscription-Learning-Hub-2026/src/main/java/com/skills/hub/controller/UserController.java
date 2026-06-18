@@ -23,48 +23,44 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegisterPage() {
-
-        // =========================
-        // TASK
-        // =========================
-        // STEP 1: Return register page
-
-        return null; // TODO: "register"
+        return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
-
-        // =========================
-        //TASK
-        // =========================
-        // STEP 1: call service.registerUser(user)
-        // STEP 2: if success → redirect to login
-        // STEP 3: else → stay on register page
-
-        return null;
+    public String registerUser(@ModelAttribute User user, org.springframework.ui.Model model) {
+        User registered = userService.registerUser(user);
+        if (registered != null) {
+            return "redirect:/login";
+        } else {
+            model.addAttribute("error", "Email already exists!");
+            return "register";
+        }
     }
 
     @GetMapping("/login")
     public String showLoginPage() {
-
-        // STEP 1: return login page
-
-        return null; // TODO: "login"
+        return "login";
     }
 
     @PostMapping("/login")
     public String login(@RequestParam String email,
-                         @RequestParam String password) {
+                         @RequestParam String password,
+                         jakarta.servlet.http.HttpSession session,
+                         org.springframework.ui.Model model) {
+        User user = userService.login(email, password);
+        if (user != null) {
+            session.setAttribute("user", user);
+            return "redirect:/packs";
+        } else {
+            model.addAttribute("error", "Invalid email or password!");
+            return "login";
+        }
+    }
 
-        // =========================
-        // PSEUDO CODE
-        // =========================
-        // STEP 1: call userService.login(email, password)
-        // STEP 2: if user != null → redirect /packs
-        // STEP 3: else → return login page again
-
-        return null;
+    @GetMapping("/logout")
+    public String logout(jakarta.servlet.http.HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 
 	public UserService getUserService() {

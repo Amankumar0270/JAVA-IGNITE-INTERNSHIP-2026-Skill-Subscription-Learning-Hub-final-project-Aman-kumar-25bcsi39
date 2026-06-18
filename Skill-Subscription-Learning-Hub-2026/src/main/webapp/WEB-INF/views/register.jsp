@@ -22,19 +22,23 @@
 <html>
 <head>
     <title>Register</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 
 <body>
 
 <div class="header">
-    <img src="/images/logo.png">
+    <img src="${pageContext.request.contextPath}/images/logo.png">
     <h2>Skill Subscription Hub</h2>
 </div>
 
 <div class="container">
 
     <h3>Register</h3>
+
+    <c:if test="${not empty error}">
+        <p style="color: red; text-align: center;">${error}</p>
+    </c:if>
 
     <form action="/register" method="post">
 

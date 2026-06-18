@@ -18,39 +18,37 @@ public class SkillPackServiceImpl implements SkillPackService {
 
     @Override
     public SkillPack addSkillPack(SkillPack pack) {
-
-        // STEP 1: validate input
-        // STEP 2: save to DB
-        // STEP 3: return saved object
-
-        return null;
+        if (pack == null || pack.getTitle() == null || pack.getPrice() == null) {
+            return null;
+        }
+        return packRepo.save(pack);
     }
 
     @Override
     public List<SkillPack> getAllPacks() {
-
-        // STEP 1: fetch all packs from DB
-        // STEP 2: return list
-
-        return null;
+        return packRepo.findAll();
     }
 
     @Override
     public SkillPack updateSkillPack(SkillPack pack) {
-
-        // STEP 1: find existing pack by ID
-        // STEP 2: if not found → return null
-        // STEP 3: update fields
-        // STEP 4: save updated pack
-        // STEP 5: return updated pack
-
-        return null;
+        if (pack == null || pack.getId() == null) {
+            return null;
+        }
+        SkillPack existing = packRepo.findById(pack.getId()).orElse(null);
+        if (existing == null) {
+            return null;
+        }
+        existing.setTitle(pack.getTitle());
+        existing.setDescription(pack.getDescription());
+        existing.setPrice(pack.getPrice());
+        return packRepo.save(existing);
     }
 
     @Override
     public void deleteSkillPack(Long id) {
-
-        // STEP 1: delete pack by ID
+        if (id != null) {
+            packRepo.deleteById(id);
+        }
     }
 
 	public SkillPackRepository getPackRepo() {

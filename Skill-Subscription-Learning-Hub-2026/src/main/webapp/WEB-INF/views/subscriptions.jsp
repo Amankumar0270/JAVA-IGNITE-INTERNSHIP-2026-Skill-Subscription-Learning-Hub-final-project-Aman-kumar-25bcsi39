@@ -47,5 +47,8 @@
 
 </table>
 
+<br>
+<a href="/packs">Back to Packs</a>
+
 </body>
 </html>
